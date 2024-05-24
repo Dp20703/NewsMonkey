@@ -27,8 +27,8 @@ export class News extends Component {
 
         }
     }
-    async componentDidMount() {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=1&pageSize=${this.props.pageSize}`;
+    async updateNews() {
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({
             loading: true
         })
@@ -42,35 +42,17 @@ export class News extends Component {
 
         })
     }
+    async componentDidMount() {
+        this.updateNews()
+    }
 
     handlePrevClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page - 1}&pageSize=${this.props.pageSize}`;
-        this.setState({
-            loading: true
-        })
-        let data = await fetch(url);
-        let ParseData = await data.json();
-        // console.log(ParseData);
-        this.setState({
-            page: this.state.page - 1,
-            articles: ParseData.articles,
-            loading: false
-        })
+        this.setState({ page: this.state.page - 1 })
+        this.updateNews()
     }
     handleNextClick = async () => {
-        let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page + 1}&pageSize=${this.props.pageSize}`;
-        this.setState({
-            loading: true
-        })
-        let data = await fetch(url);
-        let ParseData = await data.json();
-        // console.log(ParseData);
-        this.setState({
-            page: this.state.page + 1,
-            articles: ParseData.articles,
-            loading: false
-        })
-
+        this.setState({ page: this.state.page + 1 })
+        this.updateNews()
     }
 
 
@@ -84,7 +66,7 @@ export class News extends Component {
                     {!this.state.loading && this.state.articles.map((element) => {
 
                         return <div className="col-md-4" key={element.url}>
-                            <NewsItem title={element.title ? element.tite : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author?element.author:'Unknown'} date={element.publishedAt} source={element.source.name}/>
+                            <NewsItem title={element.title ? element.tite : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
                         </div>
                     })}
 

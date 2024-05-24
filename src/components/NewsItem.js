@@ -8,7 +8,7 @@ export class NewsItem extends Component {
             <div className='my-3'>
                 <div className="card">
                     
-                <span class="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{zIndex:'1',left:'90%'}}> {source}</span>
+                <span className="position-absolute top-0  translate-middle badge rounded-pill bg-danger" style={{zIndex:'1',left:'90%'}}> {source}</span>
                     <img src={imgUrl ? imgUrl : "https://images.moneycontrol.com/static-mcnews/2024/05/20240520181216_Feat-sec.jpg"} className="card-img-top" alt="..." />
                     <div className="card-body">
                         <h5 className="card-title">{title}</h5>
