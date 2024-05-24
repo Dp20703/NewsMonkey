@@ -7,14 +7,14 @@ export class News extends Component {
     static defaultProps = {
         country: 'in',
         pageSize: 5,
-        category:'general',
+        category: 'general',
     }
 
-   static propTypes={
-    country:PropTypes.string,
-    pageSize:PropTypes.number,
-    category:PropTypes.string,
-   }
+    static propTypes = {
+        country: PropTypes.string,
+        pageSize: PropTypes.number,
+        category: PropTypes.string,
+    }
 
     constructor() {
         super();
@@ -84,7 +84,7 @@ export class News extends Component {
                     {!this.state.loading && this.state.articles.map((element) => {
 
                         return <div className="col-md-4" key={element.url}>
-                            <NewsItem title={element.title ? element.tite : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} />
+                            <NewsItem title={element.title ? element.tite : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author?element.author:'Unknown'} date={element.publishedAt} source={element.source.name}/>
                         </div>
                     })}
 

@@ -1,0 +1,9 @@
+<!-- <Route path="/" element={<News pageSize={2} country='in' category='business '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='entertainment '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='general '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='health '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='science '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='sports '/>}>
+<Route path="/" element={<News pageSize={2} country='in' category='technology '/>}>
+
+<Route path="/" element={<News pageSize={2} country='in' category='science' />}> -->
