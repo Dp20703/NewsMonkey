@@ -31,11 +31,35 @@ export class News extends Component {
             articles: [],
             loading: false,
             page: 1,
-            totalResults:0
+            totalResults: 0
         }
         document.title = `${this.capitalizeFirstLetter(this.props.category)} -NewsMonkey`
     }
     async updateNews() {
+        this.props.setProgress(10)
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page}&pageSize=${this.props.pageSize}`;
+        this.setState({
+            loading: true
+        })
+        this.props.setProgress(50) 
+        let data = await fetch(url);
+        let ParseData = await data.json();
+        this.props.setProgress(70)
+        // console.log(ParseData);
+        this.setState({
+            articles: ParseData.articles,
+            totalResults: ParseData.totalResults,
+            loading: false
+
+        })
+        this.props.setProgress(100)
+    }
+    async componentDidMount() {
+        this.updateNews()
+    }
+
+    fetchMoreData = async () => {
+        this.setState({ page: this.state.page + 1 })
         const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page}&pageSize=${this.props.pageSize}`;
         this.setState({
             loading: true
@@ -44,33 +68,13 @@ export class News extends Component {
         let ParseData = await data.json();
         // console.log(ParseData);
         this.setState({
-            articles: ParseData.articles,
-            totalResults: ParseData.totalResults,
-            loading: false
-
-        })
-    }
-    async componentDidMount() {
-        this.updateNews()
-    }
-
-    fetchMoreData =async () => {
-       this.setState({page:this.state.page+1})
-       const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=c65477903a694bd49d05f241733b1705&page=${this.state.page}&pageSize=${this.props.pageSize}`;
-        this.setState({
-            loading: true
-        })
-        let data = await fetch(url);
-        let ParseData = await data.json();
-        // console.log(ParseData);
-        this.setState({
-            articles:this.state.articles.concat(ParseData.articles),
+            articles: this.state.articles.concat(ParseData.articles),
             totalResults: ParseData.totalResults,
             loading: false
 
         })
 
-      };
+    };
 
     // handlePrevClick = async () => {
     //     this.setState({ page: this.state.page - 1 })
@@ -92,7 +96,7 @@ export class News extends Component {
                 <InfiniteScroll
                     dataLength={this.state.articles.length}
                     next={this.fetchMoreData}
-                    hasMore={this.state.articles.length!==this.state.totalResults}
+                    hasMore={this.state.articles.length !== this.state.totalResults}
                     loader={<Spinner />}>
                     <div className='container my-3'>
                         <div className="row">
