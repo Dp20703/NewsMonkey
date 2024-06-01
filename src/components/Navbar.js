@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link, useLocation } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = (props) => {
   let location = useLocation();
-  console.log(location.pathname)
   return (
+    <>
     <div>
       <div>
-        <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+        <nav  className={`navbar fixed-top navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}>
           <div className="container-fluid">
-            <Link className="navbar-brand" to="/">NewsMonkey</Link>
+            <Link className="navbar-brand" to="/"> {props.title}</Link>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
             </button>
@@ -26,13 +26,31 @@ const Navbar = () => {
                 <li><Link className={`nav-link ${location.pathname === "/sports" ? 'active' : ""}`} to="/sports">Sports</Link></li>
                 <li><Link className={`nav-link ${location.pathname === "/technology" ? 'active' : ""}`} to="/technology">Technology</Link></li>
 
+
               </ul>
+              <div
+     className={`form-check form-switch text-${props.mode === "light" ? "dark" : "light"}`}>
+     <input onClick={props.toggleStyle}
+       className="form-check-input"
+       type="checkbox"
+       role="switch" id="flexSwitchCheckDefault"
+     />
+     <label
+       className="form-check-label"
+       htmlFor="flexSwitchCheckDefault"
+     >
+       Enable Dark Mode
+     </label>
+
+   </div>
 
             </div>
           </div>
         </nav>
       </div>
     </div>
+    
+   </>
   )
 
 }

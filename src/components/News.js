@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const News = (props) => {
-
+let a=props.mode;
     const [articles, setarticles] = useState([])
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
@@ -70,7 +70,7 @@ const News = (props) => {
 
     return (
         <>
-            <h1 className='text-center' style={{ margin: "35px 0px", marginTop: "90px" }}>NewsMonkey -Top {capitalizeFirstLetter(props.category)} Headliness</h1>
+            <h1 className='text-center' style={{ margin: "35px 0px", marginTop: "90px",color:props.mode === "dark" ? "white" : "#042743" }} >NewsMonkey -Top {capitalizeFirstLetter(props.category)} Headliness</h1>
             {loading && <Spinner />}
 
             <InfiniteScroll
@@ -83,7 +83,7 @@ const News = (props) => {
                         {articles.map((element) => {
 
                             return <div className="col-md-4" key={element.url}>
-                                <NewsItem title={element.title ? element.tite : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
+                                <NewsItem mode={a}  title={element.title ? element.title :''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
                             </div>
                         })}
 
