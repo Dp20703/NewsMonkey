@@ -3,11 +3,11 @@ import React from 'react'
 const NewsItem = (props) => {
 
 
-    let { title, description, imgUrl, newsUrl, author, date, source} = props;
-    let { mode} = props.mode;
+    let { title, description, imgUrl, newsUrl, author, date, source,mode} = props;
+    // let {mode } =props;
     return (
         <div className='my-3'>
-            <div className="card" style={{color:props.mode === "dark" ? "white" : "#042743",backgroundColor:props.mode === "dark" ?  "#4f3ebc":"white"   }}>
+            <div className="card" style={{color:mode === "dark" ? "white" : "#042743",backgroundColor:mode === "dark" ?  "rgb(4 29 49)":"white"}}>
                 <div>
                     <span className="d-flex justify-content-end  position-absolute   badge rounded-pill bg-danger" style={{ right: '0' }}>  {source}</span>
 
