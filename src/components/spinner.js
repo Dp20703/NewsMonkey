@@ -6,8 +6,8 @@ const spinner = () => {
         <div className="text-center my-3">
             {/* <img src={loading} alt="loading"  style={{backgroundColor:"black"}}/> */}
 
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
             </div>
 
         </div>
