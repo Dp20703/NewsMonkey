@@ -3,6 +3,7 @@ import NewsItem from '../components/NewsItem'
 import Spinner from '../components/spinner';
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
+import { CheckAndUpdateUserLimit } from '../utils/UserLimitManager';
 
 
 const News = (props) => {
@@ -17,6 +18,13 @@ const News = (props) => {
     }
 
     const updateNews = async () => {
+        // const MAX_REQUESTS_PER_DAY = 5;
+        // const limitStatus = CheckAndUpdateUserLimit();
+
+        // if (!limitStatus.allowed) {
+        //     alert(`You have exceeded your daily limit of ${MAX_REQUESTS_PER_DAY} news requests.`);
+        //     return;
+        // }
         props.setProgress(10)
         const url = props.country === 'in'
             ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
@@ -38,7 +46,7 @@ const News = (props) => {
         document.title = `${capitalizeFirstLetter(props.category)} -NewsMonkey`
         updateNews()
         // eslint-disable-next-line
-    }, [])
+    }, [props.country])
 
 
 

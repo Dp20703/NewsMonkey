@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = (props) => {
   let location = useLocation();
+  const [country, setCountry] = useState('in')
+
   return (
     <>
       <div>
@@ -25,6 +27,28 @@ const Navbar = (props) => {
                 <li><Link className={`nav-link ${location.pathname === "/science" ? 'active' : ""}`} to="/science">Science</Link></li>
                 <li><Link className={`nav-link ${location.pathname === "/sports" ? 'active' : ""}`} to="/sports">Sports</Link></li>
                 <li><Link className={`nav-link ${location.pathname === "/technology" ? 'active' : ""}`} to="/technology">Technology</Link></li>
+
+                <li>
+                  <select
+                    onChange={(e) => {
+                      const selected = e.target.value;
+                      setCountry(selected);
+                      props.selectCountry(selected);
+                    }}
+                    value={country}
+                    className={`form-select mt-1 mx-2`}
+                    style={{
+                      fontSize: '0.8rem',
+                      color: props.mode === "dark" ? "white" : "#042743",
+                      backgroundColor: props.mode === "dark" ? "#212529" : "white"
+                    }}
+                  >
+                    {/* <option value="">Select Country</option> */}
+                    <option value="in">India</option>
+                    <option value="us">United States</option>
+                  </select>
+                </li>
+
               </ul>
 
               <div
@@ -45,8 +69,8 @@ const Navbar = (props) => {
             </div>
 
           </div>
-        </nav>
-      </div>
+        </nav >
+      </div >
 
 
     </>
