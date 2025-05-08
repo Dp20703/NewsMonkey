@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import NewsItem from './NewsItem'
-import Spinner from './spinner';
+import NewsItem from '../components/NewsItem'
+import Spinner from '../components/spinner';
 import PropTypes from 'prop-types'
 import InfiniteScroll from "react-infinite-scroll-component";
 
 
 const News = (props) => {
-    
-let mode=props.mode;
+    let mode = props.mode;
     const [articles, setarticles] = useState([])
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
@@ -15,14 +14,15 @@ let mode=props.mode;
 
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
-
     }
-
-
 
     const updateNews = async () => {
         props.setProgress(10)
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+        const url = props.country === 'in'
+            ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
+            : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+
+        // console.log("Url of updateNews:", url);
         setLoading(true)
         props.setProgress(50)
         let data = await fetch(url);
@@ -43,7 +43,10 @@ let mode=props.mode;
 
 
     const fetchMoreData = async () => {
-        const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page + 1}&pageSize=${props.pageSize}`;
+        const url = props.country === 'in'
+            ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
+            : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+
         setPage(page + 1)
         setLoading(true)
 
@@ -71,7 +74,7 @@ let mode=props.mode;
 
     return (
         <>
-            <h1 className='text-center' style={{ margin: "35px 0px", marginTop: "90px",color:props.mode === "dark" ? "white" : "#042743" }} >NewsMonkey -Top {capitalizeFirstLetter(props.category)} Headliness</h1>
+            <h1 className='text-center' style={{ margin: "35px 0px", marginTop: "90px", color: props.mode === "dark" ? "white" : "#042743" }} >NewsMonkey -Top {capitalizeFirstLetter(props.category)} Headliness</h1>
             {loading && <Spinner />}
 
             <InfiniteScroll
@@ -81,10 +84,9 @@ let mode=props.mode;
                 loader={<Spinner />}>
                 <div className='container my-3'>
                     <div className="row">
-                        {articles.map((element) => {
-
-                            return <div className="col-md-4" key={element.url}>
-                                <NewsItem mode={mode}  title={element.title ? element.title :''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
+                        {articles.map((element, index) => {
+                            return <div className="col-md-4" key={index}>
+                                <NewsItem mode={mode} title={element.title ? element.title : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
                             </div>
                         })}
 
@@ -97,7 +99,6 @@ let mode=props.mode;
                     <button disabled={   page + 1 >   Math.ceil(   totalResults /  props.pageSize)}
                     type="button" className="btn btn-dark" onClick={ handleNextClick}>Next &rarr;</button>
                 </div> */}
-
         </>
     )
 

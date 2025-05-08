@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState } from 'react'
 import Navbar from './components/Navbar';
-import News from './components/News';
+import News from './pages/News';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoadingBar from 'react-top-loading-bar'
 import NewsItem from './components/NewsItem';
@@ -53,7 +53,7 @@ const App = () => {
         </Routes>
 
       </Router>
-      <NewsItem mode={mode}/>
+      <NewsItem mode={mode} />
     </div>
   )
 
