@@ -88,11 +88,11 @@ const News = (props) => {
             <InfiniteScroll
                 dataLength={articles?.length}
                 next={fetchMoreData}
-                hasMore={articles.length !== totalResults}
+                hasMore={articles?.length !== totalResults}
                 loader={<Spinner />}>
                 <div className='container my-3'>
                     <div className="row">
-                        {articles.map((element, index) => {
+                        {articles?.map((element, index) => {
                             return <div className="col-md-4" key={index}>
                                 <NewsItem mode={mode} title={element.title ? element.title : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
                             </div>
