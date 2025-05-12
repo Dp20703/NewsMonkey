@@ -26,11 +26,16 @@ const News = (props) => {
         //     return;
         // }
         props.setProgress(10)
-        const url = props.country === 'in'
-            ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
-            : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+        // const url = props.country === 'in'
+        //     ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
 
-        // console.log("Url of updateNews:", url);
+        //     : `https://gnews.io/api/v4/top-headlines?country=${props.country}&category=${props.category}&lang=en&max=${props.pageSize}&apikey=${props.apiKey}`
+        //     ;
+        //https://gnews.io/api/v4/search?q=example&lang=en&country=us&max=10&apikey=13155b3bacda8950d46b9753bc937abd
+        //https://gnews.io/api/v4/top-headlines?category=general&lang=en&country=us&max=10&apikey=13155b3bacda8950d46b9753bc937abd
+
+        const url = `https://gnews.io/api/v4/search?q=${props.category}&lang=en&country=${props.country}&max=${props.pageSize}&apikey=${props.apiKey}`
+        console.log("Url of updateNews:", url);
         setLoading(true)
         props.setProgress(50)
         let data = await fetch(url);
@@ -51,10 +56,11 @@ const News = (props) => {
 
 
     const fetchMoreData = async () => {
-        const url = props.country === 'in'
-            ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
-            : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
-
+        // const url = props.country === 'in'
+        //     ? `https://newsapi.org/v2/everything?q=india+${props.category}&language=en&sortBy=publishedAt&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`
+        //     : `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${props.apiKey}&page=${page}&pageSize=${props.pageSize}`;
+        const url = `https://gnews.io/api/v4/search?q=${props.category}&lang=en&country=${props.country}&max=${props.pageSize}&apikey=${props.apiKey}`
+        console.log("Url of fetchMoreData:", url);
         setPage(page + 1)
         setLoading(true)
 
@@ -94,7 +100,7 @@ const News = (props) => {
                     <div className="row">
                         {articles?.map((element, index) => {
                             return <div className="col-md-4" key={index}>
-                                <NewsItem mode={mode} title={element.title ? element.title : ''} description={element.description} imgUrl={element.urlToImage} newsUrl={element.url} author={element.author ? element.author : 'Unknown'} date={element.publishedAt} source={element.source.name} />
+                                <NewsItem mode={mode} title={element?.title ? element.title : ''} description={element?.description} imgUrl={element.image} newsUrl={element?.url} author={element?.author ? element.author : 'Unknown'} date={element?.publishedAt} source={element.source.name} />
                             </div>
                         })}
 
